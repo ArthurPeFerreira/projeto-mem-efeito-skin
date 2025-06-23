@@ -1,0 +1,67 @@
+{
+  "name": "projeto-mem-cabo",
+  "version": "1.0.0",
+  "description": "Projeto para Calculo do efeito skin",
+  "author": "Arthur Pedro Ferreira",
+  "private": true,
+  "main": "dist/main/main.js",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prepack-electron": "node -e \"require('fs').mkdirSync('node_modules/@img/sharp-darwin-arm64', { recursive: true });\"",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "dist": "npm run prepack-electron && npm run build && npm run build:electron && electron-builder"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2",
+    "next": "15.3.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-select": "^5.10.1",
+    "react-toastify": "^11.0.5",
+    "wait-on": "^8.0.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "electron": "^36.4.0",
+    "electron-builder": "^26.0.12",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
+  },
+  "build": {
+    "appId": "arthur.memcabo",
+    "productName": "Cálculo Efeito Skin - IFC",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "main/**/*",
+      ".next/**/*",
+      "public/**/*",
+      "package.json",
+      "!**/@img/sharp-darwin-arm64/**/*"
+    ],
+    "extraMetadata": {
+      "optionalDependencies": {
+        "@img/sharp-darwin-arm64": false
+      }
+    },
+    "asarUnpack": [
+      "**/*",
+      "!node_modules/@img/sharp-darwin-arm64/**"
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  }
+}
