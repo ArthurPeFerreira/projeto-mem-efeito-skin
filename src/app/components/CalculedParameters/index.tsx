@@ -13,14 +13,13 @@ interface CalculedParametersProps {
 
 import { formatScientific } from "@/lib/functions/formatScientific";
 
-
 export default function CalculedParameters({
   currentType,
   skinEfect,
   resistivityNewTemperature,
   Rcc,
   Rca,
-  temperature
+  temperature,
 }: CalculedParametersProps) {
   return (
     <div className="bg-gray-800 w-fit h-fit p-2 rounded-md">
@@ -36,27 +35,28 @@ export default function CalculedParameters({
                 {formatScientific(resistivityNewTemperature)} Ω·m
               </div>
               <div>
-                <strong>Efeito Pelicular a {temperature} °C (𝜹):</strong> {formatScientific(skinEfect)} Ω·m
+                <strong>Efeito Pelicular a {temperature} °C (𝜹):</strong>{" "}
+                {formatScientific(skinEfect)} Ω·m
               </div>
 
               <div>
                 <strong>
                   Resistência a {temperature} °C (R<sub>ca</sub>):
                 </strong>{" "}
-                {formatScientific(Rca,4)} Ω
+                {formatScientific(Rca, 4)} Ω
               </div>
             </>
           ) : (
             <>
               <div>
                 <strong>Resistividade a {temperature} °C (ρ):</strong>{" "}
-                {formatScientific(resistivityNewTemperature,4)} Ω·m
+                {formatScientific(resistivityNewTemperature, 4)} Ω·m
               </div>
               <div>
                 <strong>
                   Resistência a {temperature} °C (R<sub>cc</sub>):
                 </strong>{" "}
-                {formatScientific(Rcc,4)} Ω
+                {formatScientific(Rcc, 4)} Ω
               </div>
             </>
           )}
