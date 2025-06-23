@@ -2,7 +2,6 @@
 
 > Um aplicativo para auxiliar os cálculos de efeito skin em condutores, desenvolvido por **Arthur Pedro Ferreira** como trabalho de faculdade.
 
----
 
 ## 🚀 Visão Geral
 
@@ -19,23 +18,51 @@ O objetivo é que usuários possam:
 2. Configurar parâmetros de entrada (frequência, temperatura, dimensões)
 3. Obter resultados precisos de resistividade atualizada, profundidade de penetração (skin depth) e resistências AC/DC.
 
-## ⚙️ Comandos Disponíveis
+---
 
-No diretório raiz do projeto, execute:
+## 🛠️ Guia de Instalação e Execução
 
-```bash
-# 1) Desenvolvimento Web:
-npm run dev             # Inicia Next.js em modo dev com Turbopack
+Siga este passo a passo para clonar, configurar e rodar o aplicativo (web + desktop) sem mistérios:
 
-# 2) Build para produção (Web):
-npm run build           # Compila Next.js
-npm run start           # Inicia servidor Next.js em modo production
+1. **Pré-requisitos**:
+   - Node.js (≥ v16) e npm instalados.
+   - Git disponível no seu PATH.
 
-# 3) Empacotar Electron:
-npm run prepack-electron  # Prepare dependências nativas
-npm run build:electron    # Transpila código Electron (tsconfig.electron.json)
-npm run dist              # Empacota tudo e gera instaladores (.exe, .dmg, etc.)
-```
+2. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/ArthurPeFerreira/projeto-mem-efeito-skin
+   projeto-mem-efeito-skin
+   ```
+
+3. **Instale as dependências**:
+   ```bash
+   npm install
+   ```
+
+4. **Modo Desenvolvimento (Web)**:
+   ```bash
+   npm run dev
+   ```
+   - Abre o Next.js em `http://localhost:3000`.
+
+5. **Build e Execução (Web)**:
+   ```bash
+   npm run build
+   npm run start
+   ```
+   - Gera a versão de produção e inicia o servidor.
+
+6. **Empacotando com Electron**:
+   ```bash
+   npm run dist
+   ```
+   - Prepara dependências nativas, transpila o main do Electron e gera os instaladores na pasta `release/`.
+
+7. **Instale e execute**:
+   - Windows: abra o `.exe` gerado em `release/`.
+   - macOS/Linux: instale o pacote correspondente e execute.
+
+Pronto! Agora você tem o app rodando tanto no navegador quanto como aplicação desktop, tudo agilizado para seu trabalho e provas de conceito. Caso surja alguma dúvida, abra uma issue ou entre em contato com o autor. Bom código e boa convergência de correntes! 🚀
 
 ---
 
