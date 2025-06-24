@@ -16,12 +16,6 @@ const MaterialSelector = dynamic(
   { ssr: false }
 );
 
-// Carrega o componente de seleção de tipo de corrente apenas no cliente
-const CurrentTypeSelector = dynamic(
-  () => import("./components/CurrentTypeSelection"),
-  { ssr: false }
-);
-
 export default function Home() {
   // Estados de entrada
   const [selectedMaterialKey, setSelectedMaterialKey] = useState<string>(); // Material selecionado
@@ -32,7 +26,6 @@ export default function Home() {
   const [conductorRadius, setConductorRadius] = useState<number>(1); // Raio do condutor (m)
   const [conductorLength, setConductorLength] = useState<number>(1); // Comprimento do condutor (m)
   const [numberOfWires, setNumberOfWires] = useState<number>(7); // Número de fios no cabo
-  const [currentType, setCurrentType] = useState<"AC" | "DC">("AC"); // Tipo de corrente de entrada
 
   // Estados de saída (resultados)
   const [skinEfect, setSkinEfect] = useState<number>(); // Profundidade de penetração (skin depth)
@@ -40,7 +33,6 @@ export default function Home() {
     useState<number>(); // Resistividade ajustada
   const [Rcc, setRcc] = useState<number>(); // Resistência em CC
   const [Rca, setRca] = useState<number>(); // Resistência em CA
-  const [currentTypeSelected, setCurrentTypeSelected] = useState<"AC" | "DC">(); // Armazena o tipo selecionado após cálculo
 
   // Parâmetros do material
   const [relativePermeability, setRelativePermeability] = useState<number>(0); // μᵣ
@@ -80,7 +72,7 @@ export default function Home() {
 
     // Ajuste da resistência para a temperatura atual
     const resistanceNewTemperature =
-      resistance20 * (1 + alpha * (temperatureUsedToCalculate - 20));
+      resistance20 * (1 + alpha * (temperature - 20));
 
     // Cálculo da resistividade ajustada à nova temperatura
     const resistivityNewTemperature =
@@ -111,7 +103,6 @@ export default function Home() {
       (conductorArea * numberOfWires);
 
     // Atualiza estados de resultado
-    setCurrentTypeSelected(currentType);
     setSkinEfect(skinDepth);
     setResistivityNewTemperature(resistivityNewTemperature);
     setRcc(Rcc);
@@ -126,7 +117,6 @@ export default function Home() {
     setRca(undefined);
     setRcc(undefined);
   }, [
-    currentType,
     selectedMaterialKey,
     frequency,
     temperature,
@@ -153,31 +143,23 @@ export default function Home() {
         </h1>
 
         <div className="flex flex-col gap-2">
-          {/* Seleção de tipo de corrente */}
-          <CurrentTypeSelector
-            currentType={currentType}
-            setCurrentType={setCurrentType}
-          />
-
           {/* Seleção de material condutor */}
           <MaterialSelector
             selectedKey={selectedMaterialKey}
             setSelectedKey={setSelectedMaterialKey}
           />
 
-          {/* Condicional: exibe frequência apenas para corrente alternada */}
-          {currentType === "AC" && (
-            <Input
-              title="Frequência (Hz):"
-              placeholder="Digite a Frequência..."
-              setValue={setFrequency}
-              value={frequency}
-              minimum={PARAMS_MIN_VALUE}
-              step="any"
-            />
-          )}
+          {/* Frequência */}
+          <Input
+            title="Frequência (Hz):"
+            placeholder="Digite a Frequência..."
+            setValue={setFrequency}
+            value={frequency}
+            minimum={PARAMS_MIN_VALUE}
+            step="any"
+          />
 
-          {/* Demais campos de entrada */}
+          {/* Temperatura */}
           <Input
             title="Temperatura (°C):"
             placeholder="Digite a Temperatura..."
@@ -185,6 +167,8 @@ export default function Home() {
             value={temperature}
             step="any"
           />
+
+          {/* Comprimento */}
           <Input
             title="Comprimento (m):"
             placeholder="Digite o Comprimento..."
@@ -193,6 +177,8 @@ export default function Home() {
             minimum={PARAMS_MIN_VALUE}
             step="any"
           />
+
+          {/* Raio */}
           <Input
             title="Raio (m):"
             placeholder="Digite o Raio..."
@@ -201,6 +187,8 @@ export default function Home() {
             minimum={PARAMS_MIN_VALUE}
             step="any"
           />
+
+          {/* Número de Fios */}
           <Input
             title="Número de Fios:"
             placeholder="Digite o Número de Fios..."
@@ -235,7 +223,6 @@ export default function Home() {
         <CalculedParameters
           skinEfect={skinEfect}
           resistivityNewTemperature={resistivityNewTemperature}
-          currentType={currentTypeSelected}
           Rca={Rca}
           Rcc={Rcc}
           temperature={temperatureUsedToCalculate}
